@@ -1,1 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Medical Ward Student-to-Student Survey</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+      background: #f5f6fa;
+      color: #222;
+    }
+    h1 {
+      color: #185adb;
+      margin-bottom: 1rem;
+    }
+    form {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .question {
+      margin-bottom: 1.5rem;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: .5rem;
+    }
+    textarea {
+      width: 100%;
+      min-height: 60px;
+      padding: .75rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      resize: vertical;
+    }
+    button {
+      background: #185adb;
+      color: #fff;
+      padding: .8rem 2rem;
+      border: none;
+      border-radius: 4px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+    button:hover {
+      background: #10316b;
+    }
+    .confirmation {
+      display: none;
+      margin: 1rem auto 0;
+      text-align: center;
+      color: #27ae60;
+      font-weight: bold;
+    }
+  </style>
+  <script>
+    function randomFilename() {
+      // Generate a random filename for demonstration (not secure for real use)
+      const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+      let name = '';
+      for (let i = 0; i < 10; i++) {
+        name += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return 'submission_' + name + '.txt';
+    }
 
+    function handleSubmit(event) {
+      event.preventDefault();
+
+      // Collect form data
+      const formData = {};
+      for (let i = 1; i <= 10; i++) {
+        formData['q' + i] = document.getElementById('q' + i).value;
+      }
+
+      // Create file content
+      let content = 'Medical Ward Student-to-Student Survey Submission\n';
+      for (let i = 1; i <= 10; i++) {
+        content += `Q${i}: ${formData['q'+i]}\n\n`;
+      }
+
+      // Make a Blob and trigger download as a random file
+      const file = new Blob([content], {type: 'text/plain'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(file);
+      a.download = randomFilename();
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+
+      document.getElementById("survey-form").style.display = "none";
+      document.getElementById("confirmation").style.display = "block";
+    }
+  </script>
+</head>
+<body>
+  <h1>Medical Ward Student-to-Student Survey</h1>
+  <form id="survey-form" onsubmit="handleSubmit(event)">
+    <div class="question">
+      <label for="q1">1. What difficulties have you personally faced while working in the medical ward?</label>
+      <textarea id="q1" name="q1" required></textarea>
+    </div>
+    <div class="question">
+      <label for="q2">2. Do you feel you get enough guidance from staff during your shifts in the ward?</label>
+      <textarea id="q2" name="q2" required></textarea>
+    </div>
+    <div class="question">
+      <label for="q3">3. Are there enough opportunities for hands-on learning in the ward, in your opinion?</label>
+      <textarea id="q3" name="q3" required></textarea>
+    </div>
+    <div class="question">
+      <label for="q4">4. Have you ever struggled to find or use medical equipment during your time in the ward?</label>
+      <textarea id="q4" name="q4" required></textarea>
+    </div>
+    <div class="question">
+      <label for="q5">5. How would you describe communication between students and staff while on the ward?</label>
+      <textarea id="q5" name="q5" required></textarea>
+    </div>
+    <div class="question">
+      <label for="q6">6. Which part of patient care do you find most challenging as a student in the ward?</label>
+      <textarea id="q6" name="q6" required></textarea>
+    </div>
+    <div class="question">
+      <label for="q7">7. Have you observed any safety or infection control issues during your ward placement?</label>
+      <textarea id="q7" name="q7" required></textarea>
+    </div>
+    <div class="question">
+      <label for="q8">8. Can you recall any situations in the ward that made you feel unsure or unprepared?</label>
+      <textarea id="q8" name="q8" required></textarea>
+    </div>
+    <div class="question">
+      <label for="q9">9. Do you think the ward environment helps you grow and learn as a future healthcare professional?</label>
+      <textarea id="q9" name="q9" required></textarea>
+    </div>
+    <div class="question">
+      <label for="q10">10. What changes do you think would make the medical ward experience better for students like us?</label>
+      <textarea id="q10" name="q10" required></textarea>
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+  <div class="confirmation" id="confirmation">
+    Thank you for submitting your responses!<br>
+    Your answers have been saved as a file download.
+  </div>
+</body>
+  </html>
